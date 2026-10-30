@@ -1,3 +1,5 @@
+![Banner](banner.png)
+
 # codeintel-Comment-To-Code-Ratio-Analyzer
 Calculates the ratio of comments to code lines in a project or file. Identifies areas with poor commenting, which may indicate maintainability or security concerns. - Focused on Tools for static code analysis, vulnerability scanning, and code quality assurance
 
