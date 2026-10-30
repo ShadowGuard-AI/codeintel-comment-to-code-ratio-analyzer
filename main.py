@@ -3,7 +3,6 @@
 import argparse
 import os
 import logging
-import re
 import sys
 
 # Configure logging
@@ -63,35 +62,43 @@ def calculate_comment_code_ratio(file_path, exclude_patterns=None):
 
     comment_count = 0
     code_line_count = 0
-    in_multiline_comment = False
+    # The delimiter that closes the block being read, or None outside
+    # one. Tracking the delimiter, not just a flag, is what lets a
+    # block that opens and closes on one line (a one line docstring,
+    # a short C comment) count as one comment line without swallowing
+    # the rest of the file, which the old toggle flag did: every line
+    # after a one line docstring was counted as a comment.
+    multiline_end = None
 
     for line in lines:
-        line = line.strip()  # Remove leading/trailing whitespace
+        line = line.strip()
 
-        # Skip empty lines
         if not line:
             continue
 
-        # Handle multiline comments (e.g., Python's triple quotes)
-        if line.startswith("'''") or line.startswith('"""'):
-            in_multiline_comment = not in_multiline_comment
-            comment_count += 1  # Count the starting line of the multiline comment.
-            continue  # Skip the rest of the line
-        elif in_multiline_comment:
+        if multiline_end is not None:
             comment_count += 1
+            if multiline_end in line:
+                multiline_end = None
             continue
 
-        # Single-line comments (e.g., # in Python, // in C++)
+        if line.startswith("'''") or line.startswith('"""'):
+            comment_count += 1
+            delimiter = line[:3]
+            if delimiter not in line[3:]:
+                multiline_end = delimiter
+            continue
+
+        if line.startswith("/*"):
+            comment_count += 1
+            if "*/" not in line[2:]:
+                multiline_end = "*/"
+            continue
+
         if line.startswith('#') or line.startswith('//'):
             comment_count += 1
-        elif line.startswith('/*'):
-            comment_count += 1
-            in_multiline_comment = True
-        elif line.endswith('*/') and in_multiline_comment:
-            comment_count += 1
-            in_multiline_comment = False
         else:
-            code_line_count += 1  # Increment code line count only if it's not a comment.
+            code_line_count += 1
 
     if code_line_count > 0:
         ratio = comment_count / code_line_count
