@@ -117,15 +117,17 @@ def analyze_directory(directory_path, exclude_extensions=None):
         exclude_extensions (list): list of file extensions to exclude
 
     Returns:
-        None
+        bool: True if files were analyzed or none failed, False if the
+              run analyzed zero files because every file failed to read.
     """
     total_comment_lines = 0
     total_code_lines = 0
     file_count = 0
+    skipped_count = 0
 
     if not os.path.isdir(directory_path):
         logging.error(f"Invalid directory path: {directory_path}")
-        return
+        return False
 
     for root, _, files in os.walk(directory_path):
         for file in files:
@@ -151,6 +153,7 @@ def analyze_directory(directory_path, exclude_extensions=None):
                 total_code_lines += code_line_count
                 logging.info(f"File: {file_path}, Comment Lines: {comment_count}, Code Lines: {code_line_count}, Ratio: {ratio:.2f}")
             else:
+                skipped_count += 1
                 logging.warning(f"Skipping {file_path} due to error during analysis.")
 
     if total_code_lines > 0:
@@ -160,9 +163,13 @@ def analyze_directory(directory_path, exclude_extensions=None):
 
     print("\n--- Summary ---")
     print(f"Total Files Analyzed: {file_count}")
+    if skipped_count:
+        print(f"Total Files Skipped: {skipped_count}")
     print(f"Total Comment Lines: {total_comment_lines}")
     print(f"Total Code Lines: {total_code_lines}")
     print(f"Overall Comment-to-Code Ratio: {total_ratio:.2f}")
+
+    return not (file_count == 0 and skipped_count > 0)
 
 
 def main():
@@ -185,7 +192,8 @@ def main():
         else:
             sys.exit(1)  # Exit with an error code
     elif os.path.isdir(path):
-        analyze_directory(path, exclude_extensions)
+        if not analyze_directory(path, exclude_extensions):
+            sys.exit(1)  # Every file in the directory failed to read
     else:
         logging.error(f"Invalid path: {path}")
         sys.exit(1)  # Exit with an error code
