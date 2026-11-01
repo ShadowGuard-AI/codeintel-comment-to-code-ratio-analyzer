@@ -82,6 +82,9 @@ def calculate_comment_code_ratio(file_path, exclude_patterns=None):
                 multiline_end = None
             continue
 
+        # I count docstrings as comments. That is a choice, not a fact:
+        # a module with a long docstring and no hash comments still
+        # earns a real ratio from this branch.
         if line.startswith("'''") or line.startswith('"""'):
             comment_count += 1
             delimiter = line[:3]
@@ -95,6 +98,9 @@ def calculate_comment_code_ratio(file_path, exclude_patterns=None):
                 multiline_end = "*/"
             continue
 
+        # I only count a comment when it owns the whole line. A trailing
+        # comment after code counts as code here, so a heavily annotated
+        # file can score lower than a reader would expect.
         if line.startswith('#') or line.startswith('//'):
             comment_count += 1
         else:
@@ -103,6 +109,9 @@ def calculate_comment_code_ratio(file_path, exclude_patterns=None):
     if code_line_count > 0:
         ratio = comment_count / code_line_count
     else:
+        # I report 0.0 for a file with no code lines, including an empty
+        # file or a comments only file. That reads as no comments per
+        # line of code, which is the opposite of what the file is.
         ratio = 0.0  # Avoid division by zero
 
     return comment_count, code_line_count, ratio
