@@ -3,164 +3,87 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Codeintel Comment To Code Ratio Analyzer: what it is, how it runs, where it stops</title>
-<meta name="description" content="Codeintel Comment To Code Ratio Analyzer is one of my projects. The README in the repo is short, so this page sticks to what the files themselves show">
+<title>codeintel-comment-to-code-ratio-analyzer: A Diver Tally Slate</title>
+<meta name="description" content="Calculates the ratio of comments to code lines in a project or file, and identifies areas with poor commenting.">
 <style>
-:root {
-  --bg: #121418; --panel: #1c2028; --ink: #e8ecf0;
-  --mut: #252b36;
-  --acc: #5cc8e0; --acc2: #f0a05c;
-  --line: #1c2028;
-}
-* { box-sizing: border-box; }
-body { margin: 0; background: var(--bg); color: var(--ink);
-  font-family: Charter, Georgia, serif; line-height: 1.55; }
-code, pre, .mono { font-family: 'DejaVu Sans Mono', monospace; }
-a { color: var(--acc2); }
-.hero { padding: 3rem 6vw 1rem; }
-.hero img.banner { width: 100%; height: auto; border: 1px solid var(--line);
-  border-radius: 10px; }
-.logo { width: 92px; height: 92px; border-radius: 18px;
-  border: 1px solid var(--line); }
-h1 { font-size: 2.4rem; margin: 0.4em 0 0.1em; }
-h2 { border-bottom: 2px solid var(--acc); padding-bottom: 0.2em;
-  margin-top: 2em; }
-.lede { font-size: 1.15rem; max-width: 62ch; }
-main { padding: 0 6vw 3rem; max-width: 1180px; margin: 0 auto; }
-.grid { display: grid; gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
-.card { background: var(--panel); border: 1px solid var(--line);
-  border-radius: 12px; padding: 1rem 1.2rem; }
-.card.pop { animation: rise 0.7s ease both; }
-@keyframes rise { from { opacity: 0; transform: translateY(14px); }
-  to { opacity: 1; transform: none; } }
-pre.code { background: #101014; color: #e8e6df; padding: 1rem 1.2rem;
-  border-radius: 12px; overflow-x: auto; font-size: 0.86rem;
-  border-left: 5px solid var(--acc); }
-table { border-collapse: collapse; width: 100%; }
-td, th { border-bottom: 1px solid var(--line); padding: 0.45rem 0.6rem;
-  text-align: left; }
-.shots { display: grid; gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); }
-.shots img { width: 100%; height: auto; border: 1px solid var(--line);
-  border-radius: 10px; background: #f4f1e8; }
-footer { padding: 2rem 6vw; border-top: 1px solid var(--line);
-  color: var(--mut); }
-.rail { display: flex; gap: 1.2rem; align-items: flex-start; }
-.rail nav { position: sticky; top: 1rem; min-width: 180px; }
-@media (max-width: 760px) { .rail { flex-direction: column; }
-  .rail nav { position: static; } }
-@media (prefers-reduced-motion: reduce) {
-  .card.pop { animation: none; } * { scroll-behavior: auto; } }
+@font-face{font-family:'Baskervville';src:url('fonts/Baskervville.ttf') format('truetype');}
+@font-face{font-family:'Barlow';src:url('fonts/Barlow.ttf') format('truetype');}
+:root{--vent:#12281f;--ash:#e8e6da;--yellow:#e0c43c;--red:#b23428;--ink:#161a17}
+*{box-sizing:border-box}body{margin:0;background:var(--vent);color:var(--ash);font-family:'Barlow',sans-serif;line-height:1.65}
+h1,h2,h3{font-family:'Baskervville',serif;color:var(--ash)}
+.heroimg{width:100%;height:54vh;object-fit:cover;display:block}
+.hero .in,main,footer{max-width:1120px;margin:0 auto;padding:1rem 6vw 2rem}.logo{width:230px}
+nav{display:flex;gap:1rem;flex-wrap:wrap;margin:1.2rem 0}
+.btn{display:inline-block;text-decoration:none;font-family:'Baskervville',serif;color:var(--vent);background:var(--ash);border:2px solid var(--ash);padding:.85rem 1.2rem .65rem;position:relative}
+.btn::before{content:'';position:absolute;top:-9px;left:50%;width:22px;height:10px;margin-left:-11px;border:2px solid var(--ash);border-bottom:none;border-radius:8px 8px 0 0}
+.btn:hover{box-shadow:inset 4px 0 0 var(--yellow)}
+.btn:focus-visible{outline:3px double var(--ash);outline-offset:3px}
+a{color:var(--yellow)}a::before{content:'';display:inline-block;width:12px;height:12px;margin-right:.5em;border:2px solid var(--ash);border-radius:50%;vertical-align:-1px}
+section.board{background:#1d362a;border:1px solid #33513f;border-top:12px solid #2a4438;padding:.4rem 1.5rem 1.3rem;margin:1.8rem 0}
+section.board p{color:#d5d2c2}
+pre{background:#0c1a14;color:var(--ash);padding:1rem;overflow-x:auto}
+.arm{height:22px;margin:1.6rem 0;border-top:2px solid var(--ash);position:relative}
+.arm::after{content:'';position:absolute;left:3rem;top:4px;width:120px;height:12px;border-bottom:4px solid #8a6a58;border-radius:0 0 60px 60px}
+.callout{background:var(--ash);color:var(--vent);padding:.2rem 1.3rem 1rem;margin:1.3rem 0}.callout h3{color:var(--vent)}
+.flag{border:2px solid var(--red);padding:.2rem 1.2rem 1rem;margin:1.2rem 0}
+.entry{display:flex;gap:1rem;padding:.55rem 0;border-bottom:1px solid rgba(232,230,218,.25)}.entry b{font-family:'Baskervville',serif;min-width:70px}
+.tally{color:var(--yellow);font-weight:700}.exit{color:#e88a7a;font-weight:700}
 </style>
 </head>
-<body class="layout-poster">
-<!-- This page exists for codeintel-comment-to-code-ratio-analyzer alone: the layout (poster),
-     the colors, and the type were picked for this project, not
-     shared with the other project pages. The code block below is
-     copied from the file it names, line for line. If it looks
-     plain, that is because the project is plain, and I would
-     rather the page match the project than dress it up. The one
-     thing I will not do here is oversell: what this project does
-     not do is stated on the page, not hidden from it. -->
+<body>
 <header class="hero">
-  <img class="logo" src="assets/logo.png" alt="Codeintel Comment To Code Ratio Analyzer logo">
-  <img class="banner" src="assets/banner.png" alt="">
-  <h1>Codeintel Comment To Code Ratio Analyzer</h1>
-  <p class="mono"><a href="https://github.com/ShadowGuard-AI/codeintel-comment-to-code-ratio-analyzer">github.com/ShadowGuard-AI/codeintel-comment-to-code-ratio-analyzer</a></p>
+<img class="heroimg" src="assets/intro-banner.png" alt="Silt with half buried shell spirals in the foreground, the sunken Zero fighter at rest in green twilight in the middle, and a lorry hull and a distant wreck behind, with no lettering anywhere">
+<div class="in">
+<img class="logo" src="assets/logo.png" alt="A single sunken Zero fighter resting on the lagoon floor, nose down a fraction, propeller still with one blade bent back, coral on the wing root, and the name codeintel-comment-to-code-ratio-analyzer beneath in Baskervville in ash white">
+<h1>codeintel-comment-to-code-ratio-analyzer</h1>
+<p>A diver tally slate for a wreck survey. Every hull visited, its state noted, and nothing moved.</p>
+<nav>
+<a class="btn" href="#work">Count Comments Against Code</a>
+<a class="btn" href="#params">Tally a Whole Directory</a>
+<a class="btn" href="#params">Show Help</a>
+</nav>
+</div>
 </header>
-
 <main>
-  <section class="rail">
-    <nav aria-label="on this page">
-      <p class="mono"><a href="#run">Run it</a><br>
-      <a href="#files">The files</a><br>
-      <a href="#sheets">The sheets</a><br>
-      <a href="https://github.com/ShadowGuard-AI/codeintel-comment-to-code-ratio-analyzer">The repo</a></p>
-    </nav>
-    <div>
-      <p class="lede">Codeintel Comment To Code Ratio Analyzer is one of my projects. The README in the repo is short, so this page sticks to what the files themselves show.</p>
-      <div class="grid">
-        <div class="card pop"><h3>What it is</h3>
-          <p>Codeintel Comment To Code Ratio Analyzer: 5 files, 220 counted
-          lines across Python 200, Markdown 18, Text 2. One job, done in the
-          open, in files you can read.</p></div>
-        <div class="card pop"><h3>The biggest piece</h3>
-          <p><code>main.py</code> carries the most
-          lines. If the project grows, that file is where the growth
-          lands first, for better or worse.</p></div>
-        <div class="card pop"><h3>The honest gap</h3>
-          <p>No test files yet. That is the honest gap, and the roadmap in the visuals folder says what the first one should cover.</p></div>
-      </div>
-      <section id="run">
-        <h2>Run it</h2>
-        <p>The repo README has the exact commands for this one. The
-        shape is the shape for most of my projects: clone it, read the
-        top file first so you know what will happen, then run it on
-        something you do not mind breaking.</p>
-        <p class="mono">$ git clone https://github.com/ShadowGuard-AI/codeintel-comment-to-code-ratio-analyzer.git<br>$ cd codeintel-comment-to-code-ratio-analyzer</p>
-      </section>
-      
-  <section aria-label="real code">
-    <h2>The code, as it sits in the repo</h2>
-    <p>From <code>main.py</code>, line 10 on. I did
-    not tidy it for the page. What you see is what the file has.</p>
-    <pre class="code"><code>
-
-def setup_argparse():
-    &quot;&quot;&quot;
-    Sets up the argument parser for the command line interface.
-    &quot;&quot;&quot;
-    parser = argparse.ArgumentParser(
-        description=&quot;Calculates the ratio of comments to code lines in a project or file.&quot;
-    )
-    parser.add_argument(
-        &quot;path&quot;,
-        help=&quot;Path to the file or directory to analyze.&quot;,
-        type=str
-    )
-    parser.add_argument(
-        &quot;-e&quot;, &quot;--exclude&quot;,
-        help=&quot;Comma-separated list of file extensions to exclude (e.g., .txt,.log).&quot;,
-        type=str,
-        default=&quot;&quot;
-    )
-    parser.add_argument(
-        &quot;-v&quot;, &quot;--verbose&quot;,</code></pre>
-  </section>
-      <section id="files">
-        <h2>The files that matter</h2>
-        <table><tr><th>File</th><th>Lines</th></tr>
-        <tr><td><code>main.py</code></td><td>200</td></tr>
-        <tr><td><code>README.md</code></td><td>18</td></tr>
-        <tr><td><code>requirements.txt</code></td><td>2</td></tr>
-        <tr><td><code>banner.png</code></td><td>0</td></tr>
-        <tr><td><code>logo.png</code></td><td>0</td></tr>
-        </table>
-        <p>Names doing the work: <span class="mono">setup_argparse, calculate_comment_code_ratio, analyze_directory, main</span>.</p>
-      </section>
-      <section id="sheets">
-        <h2>Drawn by hand</h2>
-        <p>I sketch my projects on notebook paper so I have to
-        understand them well enough to draw them. The full set,
-        with the counts and how they were counted, is the
-        <a href="https://github.com/ShadowGuard-AI/codeintel-comment-to-code-ratio-analyzer/tree/main/codeintel-comment-to-code-ratio-analyzer-Visuals">codeintel-comment-to-code-ratio-analyzer-Visuals</a>
-        folder in the repo. Nothing is drawn over the binder holes.
-        That is a rule, not a style.</p>
-        <div class="shots">
-          <img src="assets/architecture.png" alt="Hand drawn architecture sheet for Codeintel Comment To Code Ratio Analyzer">
-          <img src="assets/flowchart.png" alt="Hand drawn flowchart sheet for Codeintel Comment To Code Ratio Analyzer">
-          <img src="assets/product-map.png" alt="Hand drawn product map sheet for Codeintel Comment To Code Ratio Analyzer">
-        </div>
-      </section>
-    </div>
-  </section>
+<section class="board" id="work"><h2>A Ratio of Comments to Code</h2>
+<p>codeintel-comment-to-code-ratio-analyzer calculates the ratio of comments to code lines in a project or file, and identifies areas with poor commenting, which may indicate maintainability or security concerns.</p>
+<p>In the tally wording of the survey: it counts comment lines against code lines in a file or directory and flags thinly commented stretches as a maintainability worry. Both wordings stand here, the README wording first, because the tally is the tool's whole act.</p>
+<h2>Areas of Poor Commenting</h2>
+<p>Areas with poor commenting are identified as the count is made, file by file or across a whole project.</p>
+</section>
+<div class="arm"></div>
+<section class="board"><h2>Install, One Clone Line</h2>
+<pre>git clone https://github.com/ShadowGuardAI/codeintel-comment-to-code-ratio-analyzer</pre>
+<div class="flag"><h3>Clone Line Flagged</h3>
+<p>The line names ShadowGuardAI without its hyphen, not ShadowGuard-AI, and it stands flagged rather than quietly corrected. The README gives no change of directory and no dependency step after the clone.</p></div>
+</section>
+<div class="arm"></div>
+<section class="board" id="usage"><h2>Usage, the Placeholder Shown for What It Is</h2>
+<pre>./codeintel-comment-to-code-ratio-analyzer [params]</pre>
+<div class="callout"><h3>The README Names No File or Directory</h3>
+<p>The README prints that line as its whole usage line. It names no file or directory argument in its usage or its parameter list, so a reader following the README alone would not know whether to point the tool at one file or at a whole project, even though its first paragraph speaks of both. No fuller invocation is invented on this slate.</p></div>
+</section>
+<div class="arm"></div>
+<section class="board" id="params"><h2>Parameters, Three Entries and No More</h2>
+<div class="entry"><b>-h</b><span>Shows a help message and exits.</span></div>
+<div class="entry"><b>-e</b><span>Listed with no description provided.</span></div>
+<div class="entry"><b>-v</b><span>Listed with no description provided.</span></div>
+<p class="tally">Tally note: two of the tool three listed switches arrive unexplained in its own document.</p>
+<div class="callout"><h3>-e and -v Arrive Unexplained</h3>
+<p>Both absences are recorded as the README's own gaps rather than filled.</p></div>
+</section>
+<div class="arm"></div>
+<section class="board"><h2>Counted Outcomes and Exits</h2>
+<h2>A Skipped Files Count Is Printed</h2>
+<p>In directory mode, a skipped files count is printed whenever any file could not be read.</p>
+<h2>A Run That Counted Nothing Exits 1</h2>
+<p class="exit">A directory run that analysed zero files because every file failed to read exits 1. In single file mode, a file that cannot be read exits 1.</p>
+<p><a href="https://github.com/ShadowGuard-AI/codeintel-comment-to-code-ratio-analyzer">The repository on GitHub</a></p>
+<h2>Licence, Closing the Tally</h2>
+<pre>Copyright (c) ShadowGuardAI</pre>
+<p>Printed as it stands and flagged beside the install line fault, the same unhyphenated name in both places. No licence name is given in the README, and this slate invents none.</p>
+</section>
 </main>
-<footer>
-  <p>Codeintel Comment To Code Ratio Analyzer is one of my projects. This page was written
-  from the repo itself on 2026-10-30: the counts are the
-  repo's counts, the code is the repo's code, and the gaps are the
-  repo's gaps.</p>
-</footer>
+<footer><p>Theme: Ship Graveyard of Truk Lagoon. Type: Baskervville for display, Barlow for reading, both SIL Open Font License 1.1. The lettering reference Zero Prime was reference only and is not embedded.</p></footer>
 </body>
 </html>

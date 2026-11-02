@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300" role="img" aria-label="The lagoon floor in three depths: the distant wreck and the lorry hull stay fixed while surface light shafts shift slowly, coral branches sway in the surge and an octopus arm uncurls a little beneath the Zero wing and curls back, silt drifts and resettles, and single bubbles rise at long intervals from a seam in the nearest hull while the shell spirals stay lying in the silt">
+<rect x="0" y="0" width="1200" height="300" fill="#12281f"/>
+<g fill="#e0c43c" opacity="0.10"><animate attributeName="opacity" values="0.10;0.18;0.08;0.10" dur="28s" repeatCount="indefinite"/><polygon points="200,0 290,0 380,238 250,238"/><polygon points="560,0 690,0 800,238 640,238"/><polygon points="930,0 1000,0 1090,238 990,238"/></g>
+<rect x="60" y="196" width="230" height="66" fill="#22382f"/>
+<polygon points="900,262 914,206 1030,206 1046,262" fill="#1c2e27"/>
+<rect x="0" y="262" width="1200" height="38" fill="#c4c0ae"/>
+<polygon points="420,254 690,246 696,258 438,266" fill="#22382f"/>
+<ellipse cx="400" cy="228" rx="150" ry="26" fill="#2a4438"/>
+<polygon points="400,238 362,214 358,238 364,256" fill="#22382f"/>
+<ellipse cx="492" cy="220" rx="36" ry="13" fill="#0c1410"/>
+<line x1="556" y1="212" x2="556" y2="248" stroke="#e8e6da" stroke-width="4"/><line x1="556" y1="230" x2="530" y2="256" stroke="#e8e6da" stroke-width="4"/>
+<g stroke="#e8e6da" stroke-width="4" fill="none"><animateTransform attributeName="transform" type="rotate" values="0 350 262;3 350 262;0 350 262" dur="11s" repeatCount="indefinite"/><path d="M350 262 v-34 M338 262 v-24 M364 262 v-27"/></g>
+<circle cx="356" cy="226" r="3" fill="#b23428"/>
+<ellipse cx="486" cy="256" rx="26" ry="11" fill="#604a42"/>
+<path d="M470 262 q-6 14 -22 16" fill="none" stroke="#604a42" stroke-width="4"><animate attributeName="d" values="M470 262 q-6 14 -22 16;M470 262 q-16 10 -38 8;M470 262 q-6 14 -22 16" dur="14s" repeatCount="indefinite"/></path>
+<g fill="#d8d4c2" opacity="0.5"><circle cx="300" cy="252" r="3"><animateTransform attributeName="transform" type="translate" values="0 0;60 6;120 0" dur="22s" repeatCount="indefinite"/></circle><circle cx="700" cy="258" r="2"><animateTransform attributeName="transform" type="translate" values="0 0;-50 4;-100 0" dur="26s" repeatCount="indefinite"/></circle></g>
+<g fill="none" stroke="#e8e6da" stroke-width="2"><circle cx="948" cy="240" r="5" opacity="0"><animate attributeName="cy" values="240;240;60;60" keyTimes="0;0.55;0.92;1" dur="19s" repeatCount="indefinite"/><animate attributeName="opacity" values="0;0.9;0.9;0" keyTimes="0;0.58;0.9;1" dur="19s" repeatCount="indefinite"/><animate attributeName="cx" values="948;948;954;954" keyTimes="0;0.55;0.92;1" dur="19s" repeatCount="indefinite"/></circle></g>
+<g fill="none" stroke="#e8e6da" stroke-width="2"><ellipse cx="180" cy="282" rx="14" ry="7"/><ellipse cx="180" cy="282" rx="7" ry="4"/><ellipse cx="1020" cy="286" rx="12" ry="6"/></g>
+</svg>

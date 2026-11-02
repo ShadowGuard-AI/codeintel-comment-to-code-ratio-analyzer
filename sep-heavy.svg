@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 40" role="img" aria-label="Major separator: one octopus arm uncurling along the full width of a fine vent black rule, sucker dots plain along its underside">
+<rect x="0" y="0" width="1200" height="40" fill="#e8e6da"/>
+<line x1="0" y1="14" x2="1200" y2="14" stroke="#12281f" stroke-width="2"/>
+<path d="M10 16 q60 16 130 10 q90 -8 150 2 q40 7 44 -6" fill="none" stroke="#604a42" stroke-width="5"/>
+<g fill="#e8e6da"><circle cx="60" cy="24" r="2.5"/><circle cx="120" cy="27" r="2.5"/><circle cx="185" cy="25" r="2.5"/><circle cx="250" cy="24" r="2.5"/><circle cx="305" cy="26" r="2.5"/></g>
+<line x1="334" y1="14" x2="1200" y2="14" stroke="#12281f" stroke-width="2"/>
+<circle cx="600" cy="30" r="4" fill="#e0c43c"/><circle cx="760" cy="30" r="4" fill="#e0c43c"/><circle cx="920" cy="30" r="4" fill="#e0c43c"/>
+</svg>
