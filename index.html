@@ -3,87 +3,95 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>codeintel-comment-to-code-ratio-analyzer: A Diver Tally Slate</title>
-<meta name="description" content="Calculates the ratio of comments to code lines in a project or file, and identifies areas with poor commenting.">
+<title>codeintel-comment-to-code-ratio-analyzer: The Blending Floor</title>
 <style>
-@font-face{font-family:'Baskervville';src:url('fonts/Baskervville.ttf') format('truetype');}
-@font-face{font-family:'Barlow';src:url('fonts/Barlow.ttf') format('truetype');}
-:root{--vent:#12281f;--ash:#e8e6da;--yellow:#e0c43c;--red:#b23428;--ink:#161a17}
-*{box-sizing:border-box}body{margin:0;background:var(--vent);color:var(--ash);font-family:'Barlow',sans-serif;line-height:1.65}
-h1,h2,h3{font-family:'Baskervville',serif;color:var(--ash)}
-.heroimg{width:100%;height:54vh;object-fit:cover;display:block}
-.hero .in,main,footer{max-width:1120px;margin:0 auto;padding:1rem 6vw 2rem}.logo{width:230px}
-nav{display:flex;gap:1rem;flex-wrap:wrap;margin:1.2rem 0}
-.btn{display:inline-block;text-decoration:none;font-family:'Baskervville',serif;color:var(--vent);background:var(--ash);border:2px solid var(--ash);padding:.85rem 1.2rem .65rem;position:relative}
-.btn::before{content:'';position:absolute;top:-9px;left:50%;width:22px;height:10px;margin-left:-11px;border:2px solid var(--ash);border-bottom:none;border-radius:8px 8px 0 0}
-.btn:hover{box-shadow:inset 4px 0 0 var(--yellow)}
-.btn:focus-visible{outline:3px double var(--ash);outline-offset:3px}
-a{color:var(--yellow)}a::before{content:'';display:inline-block;width:12px;height:12px;margin-right:.5em;border:2px solid var(--ash);border-radius:50%;vertical-align:-1px}
-section.board{background:#1d362a;border:1px solid #33513f;border-top:12px solid #2a4438;padding:.4rem 1.5rem 1.3rem;margin:1.8rem 0}
-section.board p{color:#d5d2c2}
-pre{background:#0c1a14;color:var(--ash);padding:1rem;overflow-x:auto}
-.arm{height:22px;margin:1.6rem 0;border-top:2px solid var(--ash);position:relative}
-.arm::after{content:'';position:absolute;left:3rem;top:4px;width:120px;height:12px;border-bottom:4px solid #8a6a58;border-radius:0 0 60px 60px}
-.callout{background:var(--ash);color:var(--vent);padding:.2rem 1.3rem 1rem;margin:1.3rem 0}.callout h3{color:var(--vent)}
-.flag{border:2px solid var(--red);padding:.2rem 1.2rem 1rem;margin:1.2rem 0}
-.entry{display:flex;gap:1rem;padding:.55rem 0;border-bottom:1px solid rgba(232,230,218,.25)}.entry b{font-family:'Baskervville',serif;min-width:70px}
-.tally{color:var(--yellow);font-weight:700}.exit{color:#e88a7a;font-weight:700}
+@font-face { font-family: "Belanosima"; src: url("fonts/Belanosima-400.woff2") format("woff2"); font-weight: 400; }
+@font-face { font-family: "Belanosima"; src: url("fonts/Belanosima-700.woff2") format("woff2"); font-weight: 700; }
+@font-face { font-family: "Tuffy"; src: url("fonts/Tuffy-400.woff2") format("woff2"); font-weight: 400; }
+@font-face { font-family: "Tuffy"; src: url("fonts/Tuffy-700.woff2") format("woff2"); font-weight: 700; }
+:root {
+  --paper: #f8f5ee; --cream: #ede7da; --ink: #2a231c; --soft: #6a5c4a;
+  --accent: #27604f; --deep: #7c5a1e; --line: #d8cdae; --card: #ffffff;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--cream); color: var(--ink); font-family: "Tuffy", sans-serif; line-height: 1.55; }
+.wrap { max-width: 960px; margin: 0 auto; padding: 0 20px 64px; }
+header.hero { text-align: center; padding: 52px 0 8px; }
+h1, h2 { font-family: "Belanosima", sans-serif; line-height: 1.18; font-weight: 700; }
+h1 { font-size: clamp(24px, 4.4vw, 40px); margin: 10px 0 6px; }
+.tagline { color: var(--soft); font-size: 19px; margin: 0 auto; max-width: 700px; }
+.btns { margin: 22px 0 6px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+a.btn { font-family: "Belanosima", sans-serif; text-decoration: none; padding: 11px 22px; border-radius: 999px; border: 2px solid var(--accent); color: var(--accent); background: transparent; font-size: 15px; }
+a.btn.solid { background: var(--accent); border-color: var(--accent); color: #fff; }
+figure { margin: 30px 0; }
+figure img { width: 100%; border-radius: 10px; display: block; box-shadow: 0 8px 28px rgba(52,40,22,.18); }
+figcaption { color: var(--soft); font-size: 15px; text-align: center; margin-top: 9px; }
+.facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 14px; margin: 34px 0; }
+.fact { background: var(--card); border: 1px solid var(--line); border-top: 5px solid var(--accent); border-radius: 8px; padding: 14px 16px; }
+.fact b { display: block; font-family: "Belanosima", sans-serif; font-size: 14.5px; letter-spacing: .02em; text-transform: uppercase; color: var(--accent); margin-bottom: 4px; }
+section { margin: 38px 0; }
+h2 { font-size: 25px; margin: 0 0 12px; border-bottom: 2px solid var(--line); padding-bottom: 7px; }
+code, pre { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; }
+pre { background: #1f1a13; color: #f0ead9; padding: 15px 18px; border-radius: 8px; overflow-x: auto; font-size: 14.5px; }
+table { border-collapse: collapse; width: 100%; background: var(--card); }
+th, td { border: 1px solid var(--line); padding: 9px 12px; text-align: left; vertical-align: top; }
+th { font-family: "Belanosima", sans-serif; background: var(--cream); font-size: 15px; }
+.hold { background: #f5f0df; border: 1px solid #ded0a6; border-left: 6px solid var(--accent); border-radius: 8px; padding: 16px 20px; }
+.hold h2 { border: none; padding: 0; }
+.hold ul { margin: 8px 0 4px; padding-left: 20px; }
+footer { margin-top: 52px; border-top: 2px solid var(--line); padding-top: 16px; color: var(--soft); font-size: 14.5px; text-align: center; }
 </style>
 </head>
 <body>
+<div class="wrap">
 <header class="hero">
-<img class="heroimg" src="assets/intro-banner.png" alt="Silt with half buried shell spirals in the foreground, the sunken Zero fighter at rest in green twilight in the middle, and a lorry hull and a distant wreck behind, with no lettering anywhere">
-<div class="in">
-<img class="logo" src="assets/logo.png" alt="A single sunken Zero fighter resting on the lagoon floor, nose down a fraction, propeller still with one blade bent back, coral on the wing root, and the name codeintel-comment-to-code-ratio-analyzer beneath in Baskervville in ash white">
-<h1>codeintel-comment-to-code-ratio-analyzer</h1>
-<p>A diver tally slate for a wreck survey. Every hull visited, its state noted, and nothing moved.</p>
-<nav>
-<a class="btn" href="#work">Count Comments Against Code</a>
-<a class="btn" href="#params">Tally a Whole Directory</a>
-<a class="btn" href="#params">Show Help</a>
-</nav>
-</div>
+  <h1>codeintel-comment-to-code-ratio-analyzer</h1>
+  <p class="tagline">The Blending Floor. A command line counter that weighs whole line comments against code lines in a file or a whole tree and reports the ratio it finds, leaving every judgement about the number to the reader.</p>
+  <div class="btns">
+    <a class="btn solid" href="https://github.com/ShadowGuard-AI/codeintel-comment-to-code-ratio-analyzer">The repository</a>
+    <a class="btn" href="https://github.com/ShadowGuard-AI/codeintel-comment-to-code-ratio-analyzer/blob/main/main.py">main.py</a>
+  </div>
 </header>
-<main>
-<section class="board" id="work"><h2>A Ratio of Comments to Code</h2>
-<p>codeintel-comment-to-code-ratio-analyzer calculates the ratio of comments to code lines in a project or file, and identifies areas with poor commenting, which may indicate maintainability or security concerns.</p>
-<p>In the tally wording of the survey: it counts comment lines against code lines in a file or directory and flags thinly commented stretches as a maintainability worry. Both wordings stand here, the README wording first, because the tally is the tool's whole act.</p>
-<h2>Areas of Poor Commenting</h2>
-<p>Areas with poor commenting are identified as the count is made, file by file or across a whole project.</p>
+<figure>
+  <img src="assets/banner.png" alt="A tea blending floor with open chests of leaf, the blender tipping leaf into one pan of a tall brass scale, sample bowls of the grades in a row along the bench and a jade cup at the scale's foot">
+  <figcaption>The blending floor: two heaps, one scale, and no opinion until the weighing is done.</figcaption>
+</figure>
+
+<div class="facts">
+  <div class="fact"><b>Whole lines only</b>A line counts as a comment only when the comment owns the whole line</div>
+  <div class="fact"><b>Docstrings count</b>Block comments and docstrings count as comments by the tool's stated choice</div>
+  <div class="fact"><b>Blank lines skipped</b>They weigh in neither pan</div>
+  <div class="fact"><b>Whole trees</b>Directory mode walks every file regardless of extension, with per file counts and a summary</div>
+</div>
+<section>
+  <h2>Usage</h2>
+  <pre>python3 main.py PATH [-e EXT,EXT] [-v]</pre>
+  <p>The README never names the positional in its usage or parameter text; the first argument is the file or directory to weigh. A trailing comment rides with its code line and counts as code, and a file with no code lines at all reports a ratio of 0.0.</p>
+<table>
+    <tr><th>Option</th><th>What it does</th></tr>
+    <tr><td><code>path</code></td><td>The file or directory to weigh; never named in the README text.</td></tr>
+    <tr><td><code>-e EXT,EXT</code></td><td>The README parameter list gives this flag No description provided; main.py's help text says it filters by file extension, a comma separated list.</td></tr>
+    <tr><td><code>-v</code></td><td>The README parameter list gives this flag No description provided; main.py's help text calls it verbose output.</td></tr>
+  </table>
 </section>
-<div class="arm"></div>
-<section class="board"><h2>Install, One Clone Line</h2>
-<pre>git clone https://github.com/ShadowGuardAI/codeintel-comment-to-code-ratio-analyzer</pre>
-<div class="flag"><h3>Clone Line Flagged</h3>
-<p>The line names ShadowGuardAI without its hyphen, not ShadowGuard-AI, and it stands flagged rather than quietly corrected. The README gives no change of directory and no dependency step after the clone.</p></div>
+<figure>
+  <img src="assets/intro-banner.png" alt="The two pans of the brass scale close up at balance, dark leaf heaped in each, the blender's hand at the frame edge and the open chests soft behind">
+  <figcaption>At balance: the number is the whole of the verdict.</figcaption>
+</figure>
+<section class="hold">
+  <h2>What the scale does not say</h2>
+  <ul>
+    <li>No threshold or judgement exists in the code. The GitHub description speaks of files that may have poor commenting; the tool itself reports a ratio and stops there.</li>
+    <li>A directory run prints the skipped count whenever any file failed to read, and analyzing zero files exits 1. A single unreadable file exits 1, as does a path that is neither file nor directory.</li>
+  </ul>
 </section>
-<div class="arm"></div>
-<section class="board" id="usage"><h2>Usage, the Placeholder Shown for What It Is</h2>
-<pre>./codeintel-comment-to-code-ratio-analyzer [params]</pre>
-<div class="callout"><h3>The README Names No File or Directory</h3>
-<p>The README prints that line as its whole usage line. It names no file or directory argument in its usage or its parameter list, so a reader following the README alone would not know whether to point the tool at one file or at a whole project, even though its first paragraph speaks of both. No fuller invocation is invented on this slate.</p></div>
+<section>
+  <h2>Requirements</h2>
+  <p>Python's standard library only. The requirements.txt file is a comment stating exactly that.</p>
 </section>
-<div class="arm"></div>
-<section class="board" id="params"><h2>Parameters, Three Entries and No More</h2>
-<div class="entry"><b>-h</b><span>Shows a help message and exits.</span></div>
-<div class="entry"><b>-e</b><span>Listed with no description provided.</span></div>
-<div class="entry"><b>-v</b><span>Listed with no description provided.</span></div>
-<p class="tally">Tally note: two of the tool three listed switches arrive unexplained in its own document.</p>
-<div class="callout"><h3>-e and -v Arrive Unexplained</h3>
-<p>Both absences are recorded as the README's own gaps rather than filled.</p></div>
-</section>
-<div class="arm"></div>
-<section class="board"><h2>Counted Outcomes and Exits</h2>
-<h2>A Skipped Files Count Is Printed</h2>
-<p>In directory mode, a skipped files count is printed whenever any file could not be read.</p>
-<h2>A Run That Counted Nothing Exits 1</h2>
-<p class="exit">A directory run that analysed zero files because every file failed to read exits 1. In single file mode, a file that cannot be read exits 1.</p>
-<p><a href="https://github.com/ShadowGuard-AI/codeintel-comment-to-code-ratio-analyzer">The repository on GitHub</a></p>
-<h2>Licence, Closing the Tally</h2>
-<pre>Copyright (c) ShadowGuardAI</pre>
-<p>Printed as it stands and flagged beside the install line fault, the same unhyphenated name in both places. No licence name is given in the README, and this slate invents none.</p>
-</section>
-</main>
-<footer><p>Theme: Ship Graveyard of Truk Lagoon. Type: Baskervville for display, Barlow for reading, both SIL Open Font License 1.1. The lettering reference Zero Prime was reference only and is not embedded.</p></footer>
+<footer>
+<p>The README of codeintel-comment-to-code-ratio-analyzer closes with a licence line naming ShadowGuardAI without the hyphen its org name carries, and its clone URL names the same unhyphenated org; the repository carries a separate LICENSE file headed MIT License. Both are preserved exactly as printed. Site type is set in Belanosima and Tuffy, self-hosted under the SIL Open Font License.</p>
+</footer>
+</div>
 </body>
 </html>
