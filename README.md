@@ -1,12 +1,10 @@
-![Silt with half buried shell spirals in the foreground, the sunken Zero fighter at rest in green twilight in the middle, and a lorry hull and a distant wreck behind with coral between them, with no lettering anywhere](intro-banner.png)
+![The two pans of the brass scale close up at balance, dark leaf heaped in each, the blender's hand at the frame edge and the open chests soft behind](intro-banner.png)
 
 > Sounding line plate: the depth line of the survey, ruled like a tally slate heading. A tiny Zero silhouette sits beside this heading and no other.
 
 # codeintel-Comment-To-Code-Ratio-Analyzer
 
-![A single sunken Zero fighter resting on the lagoon floor, nose down a fraction, propeller still with one blade bent back, coral on the wing root, and the name beneath in Baskervville in ash white, the heading plate](logo.png)
-
-![The lagoon floor at Truk: the sunken Zero at rest in the foreground, a lorry hull behind it to the left with a flat plate carrying codeintel-comment-to-code-ratio-analyzer in ash white, a second wreck softened by distance to the right, coral between the wrecks, and an octopus curled still beneath the Zero wing](banner.png)
+![A tea blending floor with open chests of leaf, the blender tipping leaf into one pan of a tall brass scale, sample bowls of the grades in a row along the bench and a jade cup at the scale's foot](banner.png)
 
 ![The lagoon floor in three depths: light shafts shift slowly above fixed wrecks, coral sways in the surge and an octopus arm uncurls a little beneath the Zero wing and curls back, silt drifts and resettles, and single bubbles rise at long intervals from a hull seam while the shell spirals stay lying in the silt](scene.svg)
 
