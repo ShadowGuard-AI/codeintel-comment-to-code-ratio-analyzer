@@ -4,6 +4,8 @@
 
 # codeintel-Comment-To-Code-Ratio-Analyzer
 
+![One brass balance pan heaped with dark tea leaf straight on, the scale beam soft above it and silver chest foil at the edges, the heading plate](logo.png)
+
 ![A tea blending floor with open chests of leaf, the blender tipping leaf into one pan of a tall brass scale, sample bowls of the grades in a row along the bench and a jade cup at the scale's foot](banner.png)
 
 ![The lagoon floor in three depths: light shafts shift slowly above fixed wrecks, coral sways in the surge and an octopus arm uncurls a little beneath the Zero wing and curls back, silt drifts and resettles, and single bubbles rise at long intervals from a hull seam while the shell spirals stay lying in the silt](scene.svg)

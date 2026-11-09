@@ -17,6 +17,7 @@
 body { margin: 0; background: var(--cream); color: var(--ink); font-family: "Tuffy", sans-serif; line-height: 1.55; }
 .wrap { max-width: 960px; margin: 0 auto; padding: 0 20px 64px; }
 header.hero { text-align: center; padding: 52px 0 8px; }
+img.hero-logo { width: min(430px, 82vw); border-radius: 10px; box-shadow: 0 10px 34px rgba(52,40,22,.22); }
 h1, h2 { font-family: "Belanosima", sans-serif; line-height: 1.18; font-weight: 700; }
 h1 { font-size: clamp(24px, 4.4vw, 40px); margin: 10px 0 6px; }
 .tagline { color: var(--soft); font-size: 19px; margin: 0 auto; max-width: 700px; }
@@ -45,6 +46,7 @@ footer { margin-top: 52px; border-top: 2px solid var(--line); padding-top: 16px;
 <body>
 <div class="wrap">
 <header class="hero">
+  <img class="hero-logo" src="assets/logo.png" alt="One brass balance pan heaped with dark tea leaf straight on, the scale beam soft above it and silver chest foil at the edges">
   <h1>codeintel-comment-to-code-ratio-analyzer</h1>
   <p class="tagline">The Blending Floor. A command line counter that weighs whole line comments against code lines in a file or a whole tree and reports the ratio it finds, leaving every judgement about the number to the reader.</p>
   <div class="btns">
